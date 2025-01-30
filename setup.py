@@ -12,7 +12,6 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -23,10 +22,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'nav2_cmdr_api = commander_api.nav2_cmdr_api:main',
             'rosbot_waypoint_following = commander_api.rosbot_waypoint_following:main',
             'panther_waypoint_following = commander_api.panther_waypoint_following:main',
-            'obstacle_avoidance = commander_api.obstacle_avoidance:main',
         ],
     },
 )
