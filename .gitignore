@@ -1,0 +1,17 @@
+.vscode
+build/
+log/
+install/
+bin/
+lib/
+
+*~
+
+# Emacs
+.#*
+
+# Colcon custom files
+COLCON_IGNORE
+
+.devcontainer
+__pycache__/
