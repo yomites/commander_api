@@ -4,6 +4,8 @@ import rclpy         # Needed to establish ROS2 communication
 from nav2_simple_commander.robot_navigator import BasicNavigator
 from geometry_msgs.msg import PoseStamped
 import tf_transformations
+from ament_index_python.packages import get_package_share_directory
+import os
 
 
 def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orientation_z):
@@ -11,7 +13,6 @@ def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orien
         0.0, 0.0, orientation_z)
     pose = PoseStamped()
     pose.header.frame_id = 'panther/map'
-    # pose.header.frame_id = 'map'
     pose.header.stamp = navigator.get_clock().now().to_msg()
     pose.pose.position.x = position_x
     pose.pose.position.y = position_y
@@ -27,7 +28,9 @@ def main():
     # --- Init
     rclpy.init()        # This is where the communication is initialized.
     nav = BasicNavigator(namespace='panther')
-    # nav = BasicNavigator()
+
+    filepath = os.path.join(
+        get_package_share_directory('commander_api'), 'config', 'panther_waypoints.txt')
 
     # --- Set initial pose
     initial_pose = create_pose_stamped(nav, 0.0, 0.0, 0.0)
@@ -36,7 +39,7 @@ def main():
     # --- Wait for Nav2 to be active
     nav.waitUntilNav2Active()
 
-    filename = 'panther_waypoints.txt'
+    filename = filepath
     position_x = 0.0
     position_y = 0.0
     orientation_z = 0.0
@@ -44,7 +47,7 @@ def main():
 
     with open(filename, 'r') as file:
         for line in file:
-            pose_value = line.split()
+            pose_value = line.strip()
             if pose_value == '':
                 continue
             position_x = float(pose_value.split()[0])
@@ -52,32 +55,6 @@ def main():
             orientation_z = float(pose_value.split()[2])
             waypoints.append(create_pose_stamped(
                 nav, position_x, position_y, orientation_z))
-
-    # --- Send Nav2 goal
-    # PI == 3.14 == 180
-    # --- Send Nav2 goal (Rosbot_xl waypoint in world map)
-    # goal_pose1 = create_pose_stamped(nav, 4.0, -3.0, 0.0)
-    # goal_pose2 = create_pose_stamped(nav, 9.0, 10.0, 3.14)
-    # goal_pose3 = create_pose_stamped(nav, -2.8, 11.0, 3.14)
-    # goal_pose4 = create_pose_stamped(nav, -7.0, 9.0, -1.57)
-    # goal_pose5 = create_pose_stamped(nav, -7.0, 0.0, 3.14)
-    # goal_pose6 = create_pose_stamped(nav, -9.0, -6.5, 0.0)
-    # goal_pose7 = create_pose_stamped(nav, 2.0, -4.0, 1.57)
-    # goal_pose8 = create_pose_stamped(nav, 0.0, 0.0, 0.00)
-
-    # --- Go to one pose
-    # nav.goToPose(goal_pose1)
-
-    # while not nav.isTaskComplete():
-    #    feedback = nav.getFeedback()
-    # print(feedback)
-
-    # --- Follow waypoints
-    # waypoints = [goal_pose1, goal_pose2, goal_pose3, goal_pose4,
-    #             goal_pose5, goal_pose6, goal_pose7, goal_pose8]
-
-    # waypoints = [goal_pose4,
-    #             goal_pose5, goal_pose6, goal_pose7, goal_pose8]
 
     nav.followWaypoints(waypoints)
     while not nav.isTaskComplete():
