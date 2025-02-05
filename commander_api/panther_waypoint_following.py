@@ -29,8 +29,10 @@ def main():
     rclpy.init()        # This is where the communication is initialized.
     nav = BasicNavigator(namespace='panther')
 
+    # filepath = os.path.join(get_package_share_directory('commander_api'), 'config', 'panther_waypoints.txt')
+
     filepath = os.path.join(
-        get_package_share_directory('commander_api'), 'config', 'panther_waypoints.txt')
+        get_package_share_directory('commander_api'), 'config', 'real_panther_lab_waypoints.txt')
 
     # --- Set initial pose
     initial_pose = create_pose_stamped(nav, 0.0, 0.0, 0.0)
