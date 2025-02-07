@@ -26,6 +26,8 @@ setup(
         'console_scripts': [
             'rosbot_waypoint_following = commander_api.rosbot_waypoint_following:main',
             'panther_waypoint_following = commander_api.panther_waypoint_following:main',
+            'real_panther_waypoint_following_with_namespace = commander_api.real_panther_waypoint_following_with_namespace:main',
+            'real_panther_waypoint_following_without_namespace = commander_api.real_panther_waypoint_following_without_namespace:main',
         ],
     },
 )

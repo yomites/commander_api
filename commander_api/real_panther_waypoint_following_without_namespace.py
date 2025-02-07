@@ -12,7 +12,7 @@ def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orien
     q_x, q_y, q_z, q_w = tf_transformations.quaternion_from_euler(
         0.0, 0.0, orientation_z)
     pose = PoseStamped()
-    pose.header.frame_id = 'panther/map'
+    pose.header.frame_id = 'map'
     pose.header.stamp = navigator.get_clock().now().to_msg()
     pose.pose.position.x = position_x
     pose.pose.position.y = position_y
@@ -27,13 +27,14 @@ def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orien
 def main():
     # --- Init
     rclpy.init()        # This is where the communication is initialized.
-    nav = BasicNavigator(namespace='panther')
+    nav = BasicNavigator()
 
-    filepath = os.path.join(get_package_share_directory(
-        'commander_api'), 'config', 'panther_waypoints.txt')
+    filepath = os.path.join(
+        get_package_share_directory('commander_api'), 'config', 'real_panther_lab_waypoints.txt')
 
     # --- Set initial pose
     initial_pose = create_pose_stamped(nav, 0.0, 0.0, 0.0)
+    # initial_pose = create_pose_stamped(nav, -2.55, -0.16, 0.0)
     nav.setInitialPose(initial_pose)
     # --- Wait for Nav2 to be active
     nav.waitUntilNav2Active()
