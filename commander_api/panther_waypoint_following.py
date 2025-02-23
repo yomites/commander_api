@@ -6,6 +6,7 @@ from geometry_msgs.msg import PoseStamped
 import tf_transformations
 from ament_index_python.packages import get_package_share_directory
 import os
+import csv
 
 
 def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orientation_z):
@@ -29,12 +30,11 @@ def main():
     rclpy.init()        # This is where the communication is initialized.
     nav = BasicNavigator(namespace='panther')
 
-    filepath = os.path.join(get_package_share_directory(
-        'commander_api'), 'config', 'panther_waypoints.txt')
+    filepath = os.path.expanduser('~/waypoint.csv')
 
     # --- Set initial pose
-    initial_pose = create_pose_stamped(nav, 0.0, 0.0, 0.0)
-    nav.setInitialPose(initial_pose)
+    # initial_pose = create_pose_stamped(nav, 0.0, 0.0, 0.0)
+    # nav.setInitialPose(initial_pose)
     # --- Wait for Nav2 to be active
     nav.waitUntilNav2Active()
 
@@ -44,14 +44,13 @@ def main():
     orientation_z = 0.0
     waypoints = []
 
-    with open(filename, 'r') as file:
-        for line in file:
-            pose_value = line.strip()
-            if pose_value == '':
-                continue
-            position_x = float(pose_value.split()[0])
-            position_y = float(pose_value.split()[1])
-            orientation_z = float(pose_value.split()[2])
+    with open(filename, newline='') as file:
+        reader = csv.reader(file, delimiter=',')
+        next(reader)
+        for row in reader:
+            position_x = float(row[1])
+            position_y = float(row[2])
+            orientation_z = float(row[3])
             waypoints.append(create_pose_stamped(
                 nav, position_x, position_y, orientation_z))
 
