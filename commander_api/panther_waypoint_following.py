@@ -4,9 +4,10 @@ import rclpy         # Needed to establish ROS2 communication
 from nav2_simple_commander.robot_navigator import BasicNavigator
 from geometry_msgs.msg import PoseStamped
 import tf_transformations
-from ament_index_python.packages import get_package_share_directory
 import os
 import csv
+# Needed to get the package share directory
+from ament_index_python.packages import get_package_share_directory
 
 
 def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orientation_z):
@@ -25,12 +26,20 @@ def create_pose_stamped(navigator: BasicNavigator, position_x, position_y, orien
     return pose
 
 
+def text_to_speech(voice_engine, text):
+    voice_engine.say(text)
+    voice_engine.runAndWait()
+
+
 def main():
     # --- Init
     rclpy.init()        # This is where the communication is initialized.
     nav = BasicNavigator(namespace='panther')
 
-    filepath = os.path.expanduser('~/waypoint.csv')
+    # filepath = os.path.expanduser(
+    #    '~/waypoint.csv')
+    filepath = os.path.join(get_package_share_directory(
+        'commander_api'), 'config', 'panther_new_waypoints.csv')
 
     # --- Set initial pose
     # initial_pose = create_pose_stamped(nav, 0.0, 0.0, 0.0)
