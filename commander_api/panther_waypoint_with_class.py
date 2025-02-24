@@ -68,7 +68,7 @@ class PantherWaypointFollowing(Node):
 
         print(self.nav.getResult())
         if self.nav.getResult() == TaskResult.SUCCEEDED:
-            self.text_to_speech('All waypoints reached successfully!')
+            self.text_to_speech('All waypoints reached!')
         else:
             self.text_to_speech('Failed to reach all waypoints!')
 
@@ -76,7 +76,6 @@ class PantherWaypointFollowing(Node):
 def main():
     rclpy.init()
     panther_waypoint_following = PantherWaypointFollowing()
-    panther_waypoint_following.destroy_node()
     rclpy.shutdown()
 
 
