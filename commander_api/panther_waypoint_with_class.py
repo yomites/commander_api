@@ -76,6 +76,7 @@ class PantherWaypointFollowing(Node):
 def main():
     rclpy.init()
     panther_waypoint_following = PantherWaypointFollowing()
+    panther_waypoint_following.destroy_node()
     rclpy.shutdown()
 
 
