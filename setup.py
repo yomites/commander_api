@@ -30,6 +30,8 @@ setup(
             'real_panther_waypoint_following_without_namespace = commander_api.real_panther_waypoint_following_without_namespace:main',
             'panther_go_to_pose = commander_api.panther_go_to_pose:main',
             'panther_waypoint_with_class = commander_api.panther_waypoint_with_class:main',
+            'navigate_through_poses = commander_api.navigate_through_poses:main',
+            'real_panther_waypoint_following_with_class_definition = commander_api.real_panther_waypoint_following_with_class_definition:main',
         ],
     },
 )
