@@ -68,8 +68,10 @@ class PantherWaypointFollowing(Node):
 
         print(self.nav.getResult())
         if self.nav.getResult() == TaskResult.SUCCEEDED:
+            print('All waypoints reached successfully!')
             self.text_to_speech('All waypoints reached successfully!')
         else:
+            print('Failed to reach all waypoints!')
             self.text_to_speech('Failed to reach all waypoints!')
 
 
