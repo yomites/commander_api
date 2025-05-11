@@ -43,5 +43,10 @@ After running the client for as many times as we want, we can then proceed by ru
 ros2 run commander_api real_panther_waypoint_following_with_class_definition
 ```
 
+In order to successfuly run this package, `pyttsx3` needs to be installed and that can be done using the command:
+
+```bash
+pip install pyttsx3
+```
 ## Note:
 Running the `real_panther_waypoint_following_with_class_definition.py` file from the commander_api package will likely throw an exception if the `pyttsx3` (text to voice/speech) library is not installed. So, it is enough to comment out line 6, 72, 75 and the `text_to_speech` method.
