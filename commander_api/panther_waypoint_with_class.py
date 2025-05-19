@@ -16,7 +16,7 @@ class PantherWaypointFollowing(Node):
         self.nav = BasicNavigator(namespace='panther')
         self.voice_engine = pyttsx3.init()
         self.filepath = os.path.join(get_package_share_directory(
-            'commander_api'), 'config', 'panther_new_waypoints.csv')
+            'commander_api'), 'config', 'real_panther_new_waypoints.csv')
         self.waypoints = []
         self.waypoint_reached = False
         self.read_waypoints_from_file()  # Read waypoints from the CSV file
