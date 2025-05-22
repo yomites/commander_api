@@ -35,7 +35,7 @@ If the robot navigation stack is already started, the application works as follo
 > - `ros2 run py_srvcli service`
 > - `ros2 run py_srvcli client map`
 
-The first command above starts the server while the second command starts the client which makes a request to the server for the current coordinates of the robot in the map frame. After receiving the coordinates, the client node shutdown.
+The first command above starts the server while the second command starts the client which makes a request to the server for the current coordinates of the robot in the map frame. After receiving the coordinates, the client node shutdown. The package containing these services is the py_srvcli package and needs to be cloned to a local workspace as well. The README instruction within the package explains what needs to be done in order to successfully build and use the services provided by the package.
 
 After running the client for as many times as we want, we can then proceed by running the waypoint following script. This script makes use of the coordinates in the generated csv file and executes waypoint following to each of the coordinates one after the other until the last one.
 
